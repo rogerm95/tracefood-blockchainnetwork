@@ -1,0 +1,90 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace org.example.model
+
+enum ProductType {
+  o LETTUCE
+  o APPLES
+  o PEARS
+  o PEACHES
+  o COFFEE
+}
+
+concept Address {
+  o String city optional
+  o String country
+  o String street optional
+  o String zip optional
+}
+
+concept Location {
+  o Double x
+  o Double y
+  o String zip optional
+}
+
+abstract participant ChainParticipant identified by participantId {
+  o String participantId
+  o String companyName
+  o Address address
+}
+
+participant Grower extends ChainParticipant {
+}
+
+participant Provider extends ChainParticipant {
+
+}
+
+participant Distributor extends ChainParticipant {
+
+}
+participant Seller extends ChainParticipant {
+
+}
+
+participant Consumer identified by consumerId {
+  o String consumerId
+}
+
+// Pah que no de error
+participant SampleParticipant extends ChainParticipant {
+
+}
+
+/***************************************************************************************\
+*************************************** ASSETS  **************************************** 
+\***************************************************************************************/
+
+asset SampleAsset identified by assetId {
+  o String assetId
+  --> SampleParticipant owner
+  o String value
+}
+
+transaction SampleTransaction {
+  --> SampleAsset asset
+  o String newValue
+}
+
+event SampleEvent {
+  --> SampleAsset asset
+  o String oldValue
+  o String newValue
+}
