@@ -58,6 +58,7 @@ asset food identified by foodId {
   o String foodId
   o ProductType type
   o DateTime plantDate
+  --> Grower grower
 }
 asset Warehouse identified by warehouseId {
   o String warehouseId
