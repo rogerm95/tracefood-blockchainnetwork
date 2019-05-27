@@ -2,3 +2,52 @@ namespace org.example.base
 
 
 /* Concepts */
+
+concept Address {
+  o String city optional
+  o String country
+  o String street optional
+  o String zip optional
+}
+
+concept Location {
+  o Double x
+  o Double y
+  o String zip optional
+}
+
+
+/* Abstract */
+
+abstract participant ChainParticipant identified by participantId {
+  o String participantId
+  o String companyName
+  o Address address
+}
+
+
+/* Enums */
+
+enum ProductType {
+  o LETTUCE
+  o APPLES
+  o PEARS
+  o PEACHES
+  o COFFEE
+}
+
+enum foodState {
+  o PLANTED //Pantat pel granjer
+  o HARVESTED //Collit pel granjer
+  o STORED //Esta enmagatzemat al provider
+  o TRANSIT //esta en transit del provider a la botiga
+  o SOLD //Un cop s'ha venut
+}
+
+enum shipmentStatus {
+  o PACKED //Recent empaquetat
+  o TRANSIT //Esta en transit del provider a la botiga
+  o ONSTORE //Esta a la botiga
+  o SOLD //Ha estat venut
+  // o EMPTY ¿?
+}

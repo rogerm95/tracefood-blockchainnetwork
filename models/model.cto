@@ -18,33 +18,15 @@
 
 namespace org.example.model
 
-enum ProductType {
-  o LETTUCE
-  o APPLES
-  o PEARS
-  o PEACHES
-  o COFFEE
-}
+import org.example.base.ChainParticipant
+import org.example.base.Address
+import org.example.base.Location
+import org.example.base.ProductType
 
-concept Address {
-  o String city optional
-  o String country
-  o String street optional
-  o String zip optional
-}
 
-concept Location {
-  o Double x
-  o Double y
-  o String zip optional
-}
-
-abstract participant ChainParticipant identified by participantId {
-  o String participantId
-  o String companyName
-  o Address address
-}
-
+/***************************************************************************************\
+*********************************** PARTICIPANTS *************************************** 
+\***************************************************************************************/
 participant Grower extends ChainParticipant {
 }
 
@@ -69,22 +51,53 @@ participant SampleParticipant extends ChainParticipant {
 }
 
 /***************************************************************************************\
-*************************************** ASSETS  **************************************** 
+*************************************** ASSETS ***************************************** 
 \***************************************************************************************/
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  --> SampleParticipant owner
-  o String value
+asset food identified by foodId {
+  o String foodId
+  o ProductType type
+  o DateTime plantDate
+}
+asset Warehouse identified by warehouseId {
+  o String warehouseId
+  --> Provider owner
+  o String name
+  o Address address optional
+  o Location location 
 }
 
-transaction SampleTransaction {
-  --> SampleAsset asset
-  o String newValue
+asset Shop identified by shopId {
+  o String shopId
+  --> Seller owner
+  o String name
+  o Address address optional
+  o Location location 
 }
 
-event SampleEvent {
-  --> SampleAsset asset
-  o String oldValue
-  o String newValue
+
+
+
+/***************************************************************************************\
+************************************ TRANSACTIONS ************************************** 
+\***************************************************************************************/
+
+// transaction SampleTransaction {
+//   --> SampleAsset asset
+//   o String newValue
+// }
+
+transaction setupDemo {
 }
+
+transaction plantFood {
+  o DateTime date
+  --> Grower grower
+  o ProductType type
+}
+
+// event SampleEvent {
+//   --> SampleAsset asset
+//   o String oldValue
+//   o String newValue
+// }
