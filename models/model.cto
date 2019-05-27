@@ -104,8 +104,20 @@ transaction registerWarehouse {
   o Location location 
 }
 
+transaction registerShop {
+  --> Seller owner
+  o String name
+  o Address address optional
+  o Location location 
+}
+
 // event SampleEvent {
 //   --> SampleAsset asset
 //   o String oldValue
 //   o String newValue
 // }
+
+event StoreRegistered {
+  o Shop shop
+  --> Seller seller
+}
