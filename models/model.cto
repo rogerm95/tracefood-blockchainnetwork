@@ -54,7 +54,7 @@ participant SampleParticipant extends ChainParticipant {
 *************************************** ASSETS ***************************************** 
 \***************************************************************************************/
 
-asset food identified by foodId {
+asset Food identified by foodId {
   o String foodId
   o ProductType type
   o DateTime plantDate
@@ -95,6 +95,13 @@ transaction plantFood {
   o DateTime date
   --> Grower grower
   o ProductType type
+}
+
+transaction registerWarehouse {
+  --> Provider owner
+  o String name
+  o Address address optional
+  o Location location 
 }
 
 // event SampleEvent {
