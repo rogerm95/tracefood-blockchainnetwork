@@ -36,11 +36,12 @@ enum ProductType {
   o COFFEE
 }
 
-enum foodState {
+enum movementStatus {
   o PLANTED //Pantat pel granjer
   o HARVESTED //Collit pel granjer
   o STORED //Esta enmagatzemat al provider
   o TRANSIT //esta en transit del provider a la botiga
+  o TOSELL //Està llest per aque el consumidor compri
   o SOLD //Un cop s'ha venut
 }
 
@@ -50,4 +51,9 @@ enum shipmentStatus {
   o ONSTORE //Esta a la botiga
   o SOLD //Ha estat venut
   // o EMPTY ¿?
+}
+
+enum foodState {
+  o GOOD
+  o BAD
 }

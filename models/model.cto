@@ -22,12 +22,14 @@ import org.example.base.ChainParticipant
 import org.example.base.Address
 import org.example.base.Location
 import org.example.base.ProductType
+import org.example.base.movementStatus
+import org.example.base.foodState
 
 
 /***************************************************************************************\
 *********************************** PARTICIPANTS *************************************** 
 \***************************************************************************************/
-participant Grower extends ChainParticipant {
+participant Farmer extends ChainParticipant {
 }
 
 participant Provider extends ChainParticipant {
@@ -58,7 +60,20 @@ asset Food identified by foodId {
   o String foodId
   o ProductType type
   o DateTime plantDate
-  --> Grower grower
+  o DateTime harvestedDate optional
+  o DateTime pickedUpDate optional
+  o DateTime enterWarehouseDate optional
+  o DateTime pickedUpFromWarehouse optional
+  o DateTime shopDeliveryDate optional
+  o DateTime soldDate optional
+  --> Warehouse warehouse optional
+  --> Distributor distributor optional
+  --> Farmer farmer
+  --> Seller seller optional
+  --> Shop shop optional
+  o foodState state
+  o movementStatus status optional
+  --> Provider provider optional
 }
 asset Warehouse identified by warehouseId {
   o String warehouseId
@@ -93,8 +108,13 @@ transaction setupDemo {
 
 transaction plantFood {
   o DateTime date
-  --> Grower grower
+  --> Farmer farmer
   o ProductType type
+}
+
+transaction harvestFood {
+  --> Food food
+  o DateTime date
 }
 
 transaction registerWarehouse {
@@ -111,11 +131,42 @@ transaction registerShop {
   o Location location 
 }
 
-// event SampleEvent {
-//   --> SampleAsset asset
-//   o String oldValue
-//   o String newValue
-// }
+transaction providerPickupFromFarmer {
+  --> Food food
+  --> Farmer farmer
+  --> Provider provider
+  o DateTime date
+  o foodState state
+}
+
+transaction storeInWarehouse {
+  --> Food food
+  --> Warehouse warehouse
+  o DateTime date
+  o foodState state
+}
+
+transaction pickedUpFromWarehouse {
+  --> Food food
+  --> Warehouse warehouse
+  --> Distributor distributor
+  o DateTime date
+  o foodState state
+}
+
+transaction shopDelivery {
+  o DateTime date
+  --> Food food
+  --> Distributor distributor
+  --> Shop shop
+  o foodState state
+}
+
+transaction foodSold {
+  --> Food food
+  --> Shop shop
+  o DateTime date
+}
 
 event StoreRegistered {
   o Shop shop
