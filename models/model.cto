@@ -77,13 +77,17 @@ asset Food identified by foodId {
   o foodState state
   o movementStatus status optional
   o Location[] locations optional 
-  --> Shipment shipment
+  --> Shipment shipment optional
 }
 
 asset Shipment identified by shipmentId {
   o String shipmentId
   o Food[] listOfFood optional
   o DateTime packingDate 
+  o DateTime pickedUpDate optional
+  o DateTime enterWarehouseDate optional
+  o DateTime pickedUpFromWarehouse optional
+  o DateTime shopDeliveryDate optional
   o Location[] locations
   o ProductType type
   o shipmentStatus status optional
@@ -162,12 +166,20 @@ transaction registerShop {
   o Location location 
 }
 
+// transaction providerPickupFromFarmer {
+//   --> Food food
+//   --> Farmer farmer
+//   --> Provider provider
+//   o DateTime date
+//   o foodState state
+// }
+
 transaction providerPickupFromFarmer {
-  --> Food food
+  --> Shipment shipment
   --> Farmer farmer
   --> Provider provider
   o DateTime date
-  o foodState state
+  // o foodState state
 }
 
 transaction storeInWarehouse {
