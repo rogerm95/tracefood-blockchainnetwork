@@ -127,6 +127,7 @@ transaction plantFood {
   o DateTime date
   --> Farmer farmer
   o ProductType type
+  o Integer quantity
 }
 
 transaction harvestFood {
