@@ -31,8 +31,10 @@ enum ProductType {
   o LETTUCE
   o APPLES
   o PEARS
-  o PEACHES
+  o TOMATOES
   o COFFEE
+  o STRAWBERRIES
+  o EGGPLANT
 }
 
 enum movementStatus {
@@ -49,7 +51,6 @@ enum shipmentStatus {
   o TRANSIT //Esta en transit del provider a la botiga
   o ONSTORE //Esta a la botiga
   o SOLD //Ha estat venut
-  // o EMPTY ¿?
 }
 
 enum foodState {
