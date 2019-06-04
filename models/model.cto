@@ -24,6 +24,7 @@ import org.example.base.Location
 import org.example.base.ProductType
 import org.example.base.movementStatus
 import org.example.base.foodState
+import org.example.base.shipmentStatus
 
 
 /***************************************************************************************\
@@ -61,6 +62,7 @@ asset Food identified by foodId {
   o ProductType type
   o DateTime plantDate
   o DateTime harvestedDate optional
+  o DateTime packingDate optional
   o DateTime pickedUpDate optional
   o DateTime enterWarehouseDate optional
   o DateTime pickedUpFromWarehouse optional
@@ -71,10 +73,29 @@ asset Food identified by foodId {
   --> Farmer farmer
   --> Seller seller optional
   --> Shop shop optional
+  --> Provider provider optional
   o foodState state
   o movementStatus status optional
+  o Location[] locations optional 
+  --> Shipment shipment
+}
+
+asset Shipment identified by shipmentId {
+  o String shipmentId
+  o Food[] listOfFood optional
+  o DateTime packingDate 
+  o Location[] locations
+  o ProductType type
+  o shipmentStatus status optional
+  --> Warehouse warehouse optional
+  --> Distributor distributor optional
+  --> Farmer farmer
+  --> Seller seller optional
+  --> Shop shop optional
   --> Provider provider optional
 }
+
+
 asset Warehouse identified by warehouseId {
   o String warehouseId
   --> Provider owner
@@ -94,14 +115,10 @@ asset Shop identified by shopId {
 
 
 
+
 /***************************************************************************************\
 ************************************ TRANSACTIONS ************************************** 
 \***************************************************************************************/
-
-// transaction SampleTransaction {
-//   --> SampleAsset asset
-//   o String newValue
-// }
 
 transaction setupDemo {
 }
@@ -115,6 +132,19 @@ transaction plantFood {
 transaction harvestFood {
   --> Food food
   o DateTime date
+}
+
+transaction pack {
+  o DateTime date
+  --> Food food
+  --> Shipment shipment
+}
+
+transaction createShipment {
+  o DateTime date
+  --> Farmer farmer
+  o ProductType type
+  o Location location
 }
 
 transaction registerWarehouse {

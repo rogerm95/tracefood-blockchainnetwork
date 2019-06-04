@@ -25,7 +25,6 @@ abstract participant ChainParticipant identified by participantId {
   o Address address
 }
 
-
 /* Enums */
 
 enum ProductType {
