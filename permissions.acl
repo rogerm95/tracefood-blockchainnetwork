@@ -21,15 +21,15 @@
  */
 rule Default {
     description: "Allow all participants access to all resources"
-    participant: "ANY"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
     operation: ALL
-    resource: "org.example.model.*"
+    resource: "**"
     action: ALLOW
 }
 
 rule ReadNetwork {
     description: "Allow all participants to read network"
-    participant: "org.hyperledger.composer.system.**"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
     operation: READ
     resource: "org.hyperledger.composer.system.**"
     action: ALLOW

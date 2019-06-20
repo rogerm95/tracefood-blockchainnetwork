@@ -1,4 +1,4 @@
-namespace org.example.base
+namespace org.tracefood.base
 
 
 /* Concepts */
@@ -35,6 +35,8 @@ enum ProductType {
   o COFFEE
   o STRAWBERRIES
   o EGGPLANT
+  o CARROT
+  o ORANGE
 }
 
 enum movementStatus {
@@ -49,6 +51,7 @@ enum movementStatus {
 enum shipmentStatus {
   o PACKED //Recent empaquetat
   o TRANSIT //Esta en transit del provider a la botiga
+  o STORED //Esta enmagatzemat al provider
   o ONSTORE //Esta a la botiga
   o SOLD //Ha estat venut
 }

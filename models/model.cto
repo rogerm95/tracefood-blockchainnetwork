@@ -16,15 +16,15 @@
  * Write your model definitions here
  */
 
-namespace org.example.model
+namespace org.tracefood.model
 
-import org.example.base.ChainParticipant
-import org.example.base.Address
-import org.example.base.Location
-import org.example.base.ProductType
-import org.example.base.movementStatus
-import org.example.base.foodState
-import org.example.base.shipmentStatus
+import org.tracefood.base.ChainParticipant
+import org.tracefood.base.Address
+import org.tracefood.base.Location
+import org.tracefood.base.ProductType
+import org.tracefood.base.movementStatus
+import org.tracefood.base.foodState
+import org.tracefood.base.shipmentStatus
 
 
 /***************************************************************************************\
@@ -46,11 +46,6 @@ participant Seller extends ChainParticipant {
 
 participant Consumer identified by consumerId {
   o String consumerId
-}
-
-// Pah que no de error
-participant SampleParticipant extends ChainParticipant {
-
 }
 
 /***************************************************************************************\
@@ -77,6 +72,7 @@ asset Food identified by foodId {
   o foodState state
   o movementStatus status optional
   o Location[] locations optional 
+  o Address[] addresses optional
   --> Shipment shipment optional
 }
 
@@ -90,6 +86,7 @@ asset Shipment identified by shipmentId {
   o DateTime shopDeliveryDate optional
   o Location[] locations
   o ProductType type
+  o Address[] addresses optional
   o shipmentStatus status optional
   --> Warehouse warehouse optional
   --> Distributor distributor optional
@@ -104,7 +101,15 @@ asset Warehouse identified by warehouseId {
   o String warehouseId
   --> Provider owner
   o String name
-  o Address address optional
+  o Address address 
+  o Location location 
+}
+
+asset Farm identified by farmId {
+  o String farmId
+  --> Farmer farmer
+  o String name
+  o Address address
   o Location location 
 }
 
@@ -112,7 +117,7 @@ asset Shop identified by shopId {
   o String shopId
   --> Seller owner
   o String name
-  o Address address optional
+  o Address address 
   o Location location 
 }
 
@@ -182,19 +187,34 @@ transaction providerPickupFromFarmer {
   // o foodState state
 }
 
+// transaction storeInWarehouse {
+//   --> Food food
+//   --> Warehouse warehouse
+//   o DateTime date
+//   o foodState state
+// }
+
 transaction storeInWarehouse {
-  --> Food food
+  --> Shipment shipment
   --> Warehouse warehouse
   o DateTime date
-  o foodState state
+  // o foodState state
 }
+
+// transaction pickedUpFromWarehouse {
+//   --> Food food
+//   --> Warehouse warehouse
+//   --> Distributor distributor
+//   o DateTime date
+//   o foodState state
+// }
 
 transaction pickedUpFromWarehouse {
   --> Food food
   --> Warehouse warehouse
   --> Distributor distributor
   o DateTime date
-  o foodState state
+  // o foodState state
 }
 
 transaction shopDelivery {
@@ -206,6 +226,12 @@ transaction shopDelivery {
 }
 
 transaction foodSold {
+  --> Food food
+  --> Shop shop
+  o DateTime date
+}
+
+transaction shipmentSold {
   --> Food food
   --> Shop shop
   o DateTime date
