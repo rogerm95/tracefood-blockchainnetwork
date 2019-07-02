@@ -135,6 +135,7 @@ transaction setupDemo {
 transaction plantFood {
   o DateTime date
   --> Farmer farmer
+  --> Farm farm
   o ProductType type
   o Integer quantity
 }
@@ -166,6 +167,13 @@ transaction registerWarehouse {
 
 transaction registerShop {
   --> Seller owner
+  o String name
+  o Address address optional
+  o Location location 
+}
+
+transaction registerFarm {
+  --> Farmer owner
   o String name
   o Address address optional
   o Location location 
