@@ -69,6 +69,10 @@ asset Food identified by foodId {
   --> Seller seller optional
   --> Shop shop optional
   --> Provider provider optional
+  --> Farm farm
+  o String farmName optional
+  o String warehouseName optional
+  o String shopName optional
   o foodState state
   o movementStatus status optional
   o Location[] locations optional 
@@ -88,9 +92,13 @@ asset Shipment identified by shipmentId {
   o ProductType type
   o Address[] addresses optional
   o shipmentStatus status optional
+  o String farmName optional
+  o String warehouseName optional
+  o String shopName optional
   --> Warehouse warehouse optional
   --> Distributor distributor optional
   --> Farmer farmer
+  --> Farm farm
   --> Seller seller optional
   --> Shop shop optional
   --> Provider provider optional
@@ -154,28 +162,28 @@ transaction pack {
 transaction createShipment {
   o DateTime date
   --> Farmer farmer
+  --> Farm farm
   o ProductType type
-  o Location location
 }
 
 transaction registerWarehouse {
   --> Provider owner
   o String name
-  o Address address optional
+  o Address address 
   o Location location 
 }
 
 transaction registerShop {
   --> Seller owner
   o String name
-  o Address address optional
+  o Address address 
   o Location location 
 }
 
 transaction registerFarm {
   --> Farmer owner
   o String name
-  o Address address optional
+  o Address address 
   o Location location 
 }
 
@@ -218,19 +226,27 @@ transaction storeInWarehouse {
 // }
 
 transaction pickedUpFromWarehouse {
-  --> Food food
+  --> Shipment shipment
   --> Warehouse warehouse
   --> Distributor distributor
   o DateTime date
   // o foodState state
 }
 
+// transaction shopDelivery {
+//   o DateTime date
+//   --> Food food
+//   --> Distributor distributor
+//   --> Shop shop
+//   o foodState state
+// }
+
 transaction shopDelivery {
   o DateTime date
-  --> Food food
+  --> Shipment shipment
   --> Distributor distributor
   --> Shop shop
-  o foodState state
+  // o foodState state
 }
 
 transaction foodSold {
